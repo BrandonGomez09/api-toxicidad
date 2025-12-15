@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware 
 from pydantic import BaseModel
 from pysentimiento import create_analyzer
 import re
@@ -10,6 +11,15 @@ app = FastAPI(
     description="Detección de lenguaje ofensivo",
     version="1.0"
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"], 
+)
+# ---------------------------------------------------------------
 
 @app.on_event("startup")
 def startup_event():
